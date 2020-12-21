@@ -43,22 +43,22 @@
                         {
                             <img src="@dog.ImageUrl" class="card-img-top" alt="Doggo" />
                         }
-                        <div class="card-body">
-                            <div>
-                                <label class="font-weight-bold">Name:</label>
-                                <span>@dog.Name</span>
-                            </div>
-                            <div>
-                                <label class="font-weight-bold">Breed:</label>
-                                <span>@dog.Breed</span>
-                            </div>
-                            <div>
-                                <label class="font-weight-bold">Notes:</label>
-                                <p>@dog.Notes</p>
-                            </div>
-                            <a class="dog-link text-dark" asp-area="" asp-controller="Owners" asp-action="Walk">Walks</a>
-                            <a class="dog-link text-dark" asp-area="" asp-controller="Owners" asp-action="Walk">Edit</a>
+                    <div class="card-body">
+                        <div>
+                            <label class="font-weight-bold">Name:</label>
+                            <span>@dog.Name</span>
                         </div>
+                        <div>
+                            <label class="font-weight-bold">Breed:</label>
+                            <span>@dog.Breed</span>
+                        </div>
+                        <div>
+                            <label class="font-weight-bold">Notes:</label>
+                            <p>@dog.Notes</p>
+                        </div>
+                        <a asp-controller="Walk" asp-action="Details">Walk Details</a>
+                        <a asp-controller="Walk" asp-action="Edit">Edit Walk</a>
+                    </div>
                     </div>
                 }
             </div>
@@ -73,7 +73,8 @@
                 <li class="list-group-item disabled" aria-disabled="true">
                     <img src="@walker.ImageUrl" style="width:50px" />
                     <span class="font-weight-bold ml-4">@walker.Name</span>
-                    <a class="Walker-link text-dark" asp-area="" asp-controller="Owners" asp-action="Walk">Schedule a Walk</a>
+                    <a asp-controller="Walk" asp-action="Create">Schedule a Walk</a>
+                 
                 </li>
                 }
             </ul>
