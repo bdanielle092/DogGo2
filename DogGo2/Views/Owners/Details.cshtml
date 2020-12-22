@@ -56,8 +56,8 @@
                             <label class="font-weight-bold">Notes:</label>
                             <p>@dog.Notes</p>
                         </div>
-                        <a asp-controller="Walk" asp-action="Details">Walk Details</a>
-                        <a asp-controller="Walk" asp-action="Edit">Edit Walk</a>
+                        <a asp-controller="Walks" asp-action="Details">Walk Details</a>
+                        <a asp-controller="Walks" asp-action="Edit">Edit Walk</a>
                     </div>
                     </div>
                 }
@@ -73,7 +73,7 @@
                 <li class="list-group-item disabled" aria-disabled="true">
                     <img src="@walker.ImageUrl" style="width:50px" />
                     <span class="font-weight-bold ml-4">@walker.Name</span>
-                    <a asp-controller="Walk" asp-action="Create">Schedule a Walk</a>
+                    <a asp-controller="Walks" asp-action="Create">Schedule a Walk</a>
                  
                 </li>
                 }

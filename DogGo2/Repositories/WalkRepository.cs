@@ -144,7 +144,7 @@ namespace DogGo2.Repositories
                 conn.Open();
                 using(SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Walk ([Date], Duration, WalkerId, DogId, WalkStatusId )
+                    cmd.CommandText = @"INSERT INTO Walks ([Date], Duration, WalkerId, DogId, WalkStatusId )
                                        OUTPUT INSERTED.ID
                                        VALUES (@date, @duration, @walkerId, @dogId, @WalkstatusId);
                    ";
@@ -168,7 +168,7 @@ namespace DogGo2.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Walk
+                    cmd.CommandText = @"UPDATE Walks
                                        SET
                                         [Date] = @date,
                                         Duration = @duration,
@@ -195,7 +195,7 @@ namespace DogGo2.Repositories
                 conn.Open();
                 using(SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Walk 
+                    cmd.CommandText = @"DELETE FROM Walks 
                                        WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", walkId);
 
