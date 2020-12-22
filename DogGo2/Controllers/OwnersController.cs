@@ -45,6 +45,7 @@ namespace DogGo2.Controllers
             Owner owner = _ownerRepo.GetOwnerById(id);
             List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
             List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
+           
 
             //creating an Oject that holds owner and the list of dogs and walkers
             ProfileViewModel vm = new ProfileViewModel

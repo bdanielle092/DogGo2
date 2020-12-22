@@ -56,8 +56,8 @@
                             <label class="font-weight-bold">Notes:</label>
                             <p>@dog.Notes</p>
                         </div>
-                        <a asp-controller="Walks" asp-action="Details">Walk Details</a>
-                        <a asp-controller="Walks" asp-action="Edit">Edit Walk</a>
+                        @Html.ActionLink("Details", "Details", new { id = dog.Id }) 
+                        @Html.ActionLink("Edit", "Edit", new { id = dog.Id }) 
                     </div>
                     </div>
                 }
@@ -70,7 +70,7 @@
             <ul class="list-group mt-4">
                 @foreach (Walker walker in Model.Walkers)
                 {
-                <li class="list-group-item disabled" aria-disabled="true">
+                <li>
                     <img src="@walker.ImageUrl" style="width:50px" />
                     <span class="font-weight-bold ml-4">@walker.Name</span>
                     <a asp-controller="Walks" asp-action="Create">Schedule a Walk</a>
