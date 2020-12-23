@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DogGo2.Controllers
@@ -48,10 +49,12 @@ namespace DogGo2.Controllers
         public ActionResult Create(int id)
         {
             
-            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(OwnerId);
-            int OwnerId = GetCurrentOwner();
+          
+           
             Walker walker = _walkerRepo.GetWalkerById(id);
-       
+            int OwnerId = GetCurrentOwner();
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(OwnerId);
+
 
             ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
             {
@@ -67,7 +70,7 @@ namespace DogGo2.Controllers
         // POST: Walks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ScheduleAWalkFormViewModel viewModel)
+        public ActionResult Create(ScheduleAWalkFormViewModel viewModel, int id)
         {
             try
             {
@@ -76,9 +79,20 @@ namespace DogGo2.Controllers
             }
             catch(Exception ex)
             {
+                Walker walker = _walkerRepo.GetWalkerById(id);
+                int ownerId = GetCurrentOwner();
                 viewModel.ErrorMessage = "Something went wrong try again";
                 viewModel.Dogs = _dogRepo.GetDogsByOwnerId(ownerId);
-                viewModel.Walker = _walkerRepo.GetWalkerById(Id);
+
+                //ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
+                //{
+                //    OwnerId = OwnerId,
+                //    Dogs = dogs,
+                //    Walker = walker,
+
+
+                //};
+
                 return View(viewModel);
             }
         }
@@ -131,6 +145,13 @@ namespace DogGo2.Controllers
             {
                 return View(walk);
             }
+        }
+
+
+        private int GetCurrentOwner()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }

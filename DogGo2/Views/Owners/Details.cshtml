@@ -73,8 +73,9 @@
                 <li>
                     <img src="@walker.ImageUrl" style="width:50px" />
                     <span class="font-weight-bold ml-4">@walker.Name</span>
-                    <a asp-controller="Walks" asp-action="Create">Schedule a Walk</a>
-                 
+                    <a href="../../Walks/Create/@walker.Id" class="button">Schedule Walk </a>
+                    @*<a asp-controller="Walks" asp-action="Create/@walker.Id">Schedule a Walk</a>*@
+
                 </li>
                 }
             </ul>
