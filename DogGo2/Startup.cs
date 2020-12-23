@@ -32,6 +32,7 @@ namespace DogGo2
             services.AddTransient<IDogRepository, DogRepository>();
             services.AddTransient<INeighborhoodRepository, NeighborhoodRepository>();
             services.AddTransient<IWalkRepository, WalkRepository>();
+            services.AddTransient<IWalkStatusRepository, WalkStatusRepository>();
             //this adds the call to AddAuthentication
             services.AddControllersWithViews();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

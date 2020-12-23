@@ -22,13 +22,15 @@ namespace DogGo2.Controllers
         private readonly IDogRepository _dogRepo;
         private readonly IWalkerRepository _walkerRepo;
         private readonly INeighborhoodRepository _neighborhoodRepo;
+        private readonly IWalkRepository _walkRepo;
 
-        public OwnersController(IOwnerRepository ownerRepository, IDogRepository dogRepository, IWalkerRepository walkerRepository, INeighborhoodRepository neighborhoodRepository)
+        public OwnersController(IOwnerRepository ownerRepository, IDogRepository dogRepository, IWalkerRepository walkerRepository, INeighborhoodRepository neighborhoodRepository, IWalkRepository walkRepository)
         {
             _ownerRepo = ownerRepository;
             _dogRepo = dogRepository;
             _walkerRepo = walkerRepository;
             _neighborhoodRepo = neighborhoodRepository;
+            _walkRepo = walkRepository;
         }
 
         // GET: OwnersController
@@ -45,6 +47,7 @@ namespace DogGo2.Controllers
             Owner owner = _ownerRepo.GetOwnerById(id);
             List<Dog> dogs = _dogRepo.GetDogsByOwnerId(owner.Id);
             List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
+          
            
 
             //creating an Oject that holds owner and the list of dogs and walkers
@@ -52,8 +55,7 @@ namespace DogGo2.Controllers
             {
                 Owner = owner,
                 Dogs = dogs,
-                Walkers = walkers
-
+                Walkers = walkers,
             };
             //returning the view model
             return View(vm);

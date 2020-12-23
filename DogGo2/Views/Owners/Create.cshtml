@@ -1,17 +1,17 @@
 ﻿@model DogGo2.Models.ViewModels.OwnerFormViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Registration";
 }
 
-<h1>Create</h1>
+<h1>Registration</h1>
 @*this is saying if an exception is thrown show error message*@ 
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
     <div class="alert alert-danger">@Model.ErrorMessage</div>
 }
 
-<h4>Owner</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">

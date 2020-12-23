@@ -1,4 +1,5 @@
 ﻿using DogGo2.Models;
+using DogGo2.Models.ViewModels;
 using DogGo2.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,17 @@ namespace DogGo2.Controllers
     public class WalksController : Controller
     {
         private readonly IWalkRepository _walkRepo;
+        private readonly IDogRepository _dogRepo;
+        private readonly IWalkerRepository _walkerRepo;
+    
+    
 
-        public WalksController(IWalkRepository walkRepository)
+        public WalksController(IWalkRepository walkRepository, IDogRepository dogRepository, IWalkerRepository walkerRepository)
         {
             _walkRepo = walkRepository;
+            _dogRepo = dogRepository;
+            _walkerRepo = walkerRepository;
+           
         }
 
         // GET: Walks
@@ -37,24 +45,41 @@ namespace DogGo2.Controllers
         }
 
         // GET: Walks/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            return View();
+            
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(OwnerId);
+            int OwnerId = GetCurrentOwner();
+            Walker walker = _walkerRepo.GetWalkerById(id);
+       
+
+            ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
+            {
+                OwnerId = OwnerId,
+                Dogs = dogs,
+                Walker = walker,
+                
+
+            };
+            return View(vm);
         }
 
         // POST: Walks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Walk walk)
+        public ActionResult Create(ScheduleAWalkFormViewModel viewModel)
         {
             try
             {
-                _walkRepo.AddWalk(walk);
+                _walkRepo.AddWalk(viewModel.Walk);
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
             {
-                return View(walk);
+                viewModel.ErrorMessage = "Something went wrong try again";
+                viewModel.Dogs = _dogRepo.GetDogsByOwnerId(ownerId);
+                viewModel.Walker = _walkerRepo.GetWalkerById(Id);
+                return View(viewModel);
             }
         }
 
