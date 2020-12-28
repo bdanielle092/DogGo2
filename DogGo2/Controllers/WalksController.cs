@@ -56,7 +56,7 @@ namespace DogGo2.Controllers
             List<Dog> dogs = _dogRepo.GetDogsByOwnerId(OwnerId);
 
 
-            ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
+            ScheduleAWalkFormViewModel sawfvm = new ScheduleAWalkFormViewModel()
             {
                 OwnerId = OwnerId,
                 Dogs = dogs,
@@ -64,36 +64,34 @@ namespace DogGo2.Controllers
                 
 
             };
-            return View(vm);
+            return View(sawfvm);
         }
 
         // POST: Walks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ScheduleAWalkFormViewModel viewModel, int id)
+        public ActionResult Create(ScheduleAWalkFormViewModel sawfvm, int id)
         {
             try
             {
-                _walkRepo.AddWalk(viewModel.Walk);
-                return RedirectToAction(nameof(Index));
+                _walkRepo.AddWalk(sawfvm.Walk);
+                return RedirectToAction("Details", "Owners");
             }
             catch(Exception ex)
             {
                 Walker walker = _walkerRepo.GetWalkerById(id);
                 int ownerId = GetCurrentOwner();
-                viewModel.ErrorMessage = "Something went wrong try again";
-                viewModel.Dogs = _dogRepo.GetDogsByOwnerId(ownerId);
+                List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
 
-                //ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
-                //{
-                //    OwnerId = OwnerId,
-                //    Dogs = dogs,
-                //    Walker = walker,
+                ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
+                {
+                    OwnerId = ownerId,
+                    Dogs = dogs,
+                    Walker = walker,
+                    ErrorMessage = "Something went wrong, Please try again"
+                };
 
-
-                //};
-
-                return View(viewModel);
+                return View(sawfvm);
             }
         }
 
@@ -155,3 +153,5 @@ namespace DogGo2.Controllers
         }
     }
 }
+
+
