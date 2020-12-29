@@ -18,6 +18,7 @@ namespace DogGo2.Controllers
         private readonly IWalkerRepository _walkerRepo;
     
     
+    
 
         public WalksController(IWalkRepository walkRepository, IDogRepository dogRepository, IWalkerRepository walkerRepository)
         {
@@ -72,24 +73,23 @@ namespace DogGo2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ScheduleAWalkFormViewModel sawfvm, int id)
         {
+           
+
             try
-            {
-                _walkRepo.AddWalk(sawfvm.Walk);
-                return RedirectToAction("Details", "Owners");
-            }
-            catch(Exception ex)
             {
                 Walker walker = _walkerRepo.GetWalkerById(id);
                 int ownerId = GetCurrentOwner();
                 List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
+                sawfvm.Walk.WalkerId = id;
+                sawfvm.Walk.WalkStatusId = 1;
+                _walkRepo.AddWalk(sawfvm.Walk);
 
-                ScheduleAWalkFormViewModel vm = new ScheduleAWalkFormViewModel()
-                {
-                    OwnerId = ownerId,
-                    Dogs = dogs,
-                    Walker = walker,
-                    ErrorMessage = "Something went wrong, Please try again"
-                };
+                return RedirectToAction("Details", "Owners");
+            }
+            catch (Exception ex)
+            {
+                sawfvm.ErrorMessage = "Something went wrong, Please try again";
+
 
                 return View(sawfvm);
             }
