@@ -60,7 +60,7 @@ namespace DogGo2.Controllers
             {
                 dog.OwnerId = GetCurrentUserId();
                 _dogRepo.AddDog(dog);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Owners");
             }
             catch(Exception ex)
             { 
@@ -90,7 +90,7 @@ namespace DogGo2.Controllers
             {
                 dog.OwnerId = GetCurrentUserId();
                 _dogRepo.UpdateDog(dog);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Owners");
             }
             catch (Exception ex)
             {
